@@ -12,8 +12,10 @@ export default function App() {
   const [Bmi, setBmi] = useState("")
 
   function calcular(Altura, Peso) {
-    setBmi(Peso /((Altura / 100)*(Altura / 100)))
-    console.log(`BMI: ${Bmi}`)
+    if (Altura != "" && Peso != "") {
+      setBmi(Peso /((Altura / 100)*(Altura / 100)))
+      console.log(`BMI: ${Bmi}`)
+    }
   }
 
   return (
