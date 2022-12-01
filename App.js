@@ -1,16 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
+import logoImg from './assets/bmi.png';
 import { StyleSheet, Image, Text, View, TextInput, Button, Pressable  } from 'react-native';
+
+
 
 
 export default function App() {
   const [Altura, setAltura] = useState("")
   const [Peso, setPeso] = useState("")
+  const [Bmi, setBmi] = useState("")
+
+  function calcular(Altura, Peso) {
+    setBmi(Peso /((Altura / 100)*(Altura / 100)))
+    console.log(`BMI: ${Bmi}`)
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>IMC</Text>
-      <Image source={requice('./assets/bmi.png')} />
+      {/* <Text style={styles.title}>IMC</Text> */}
+      <Image 
+      style={styles.logoImage}
+      source={logoImg} 
+      />
       <StatusBar style="auto" />
       <TextInput
         style={styles.input}
@@ -27,19 +39,15 @@ export default function App() {
         value={Peso}
       />
     
-    <Button 
-      style={[styles.button, styles.blue]}
-      onPress={() => console.log(`Altura: ${Altura} | Peso: ${Peso}`)}
-      title="Calcular"
-    />
 
     <Pressable  
-      style={styles.button}
-      
-      onPress={() => console.log(`Altura: ${Altura} | Peso: ${Peso}`)}
+      style={[styles.button, styles.blue]}
+      onPress={() => calcular(Altura, Peso)}
     >
       <Text style={styles.text}>CALCULAR</Text>
     </Pressable>
+
+    <Text style={styles.result}>{Bmi.toFixed(2)}</Text>
 
     </View>
   );
@@ -60,6 +68,10 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     color: '#2296F3'
   },
+  logoImage: {
+    marginTop: 70,
+    marginBottom: 10,
+  },
   input: {
     height: 50,
     width: '100%',
@@ -70,7 +82,8 @@ const styles = StyleSheet.create({
   button: {
     height: 50,
     width: '100%',
-    marginTop: 15,
+    marginTop: 20,
+    marginBottom: 20,
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center'
@@ -84,6 +97,10 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     fontWeight: 'bold',
     letterSpacing: 0.5
+  },
+  result: {
+    fontSize: 35,
+    fontWeight: 'bold',
   }
   }
 );
